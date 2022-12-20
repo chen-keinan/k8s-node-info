@@ -7,7 +7,11 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const configFolder = "config"
+const (
+	configFolder = "config"
+	Version      = "v1"
+	Kind         = "Nodeinfo"
+)
 
 //go:embed config
 var config embed.FS
@@ -51,4 +55,11 @@ func getSpecInfo(info string) (*SpecInfo, error) {
 		return nil, err
 	}
 	return &specInfo, nil
+}
+
+type Node struct {
+	APIVersion string                 `json:"apiVersion"`
+	Kind       string                 `json:"kind"`
+	Type       string                 `json:"type"`
+	Info       map[string]interface{} `json:"info"`
 }

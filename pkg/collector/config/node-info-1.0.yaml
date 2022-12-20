@@ -3,6 +3,6 @@ version: "1.0"
 name: node-info-collector
 title: "Node Specification for info collector"
 collectors:
-  - name: kube-apiserver-file-permission
+  - name: kubeApiserverFilePermission
     audit: stat -c %a /etc/kubernetes/manifests/kube-apiserver.yaml
     
