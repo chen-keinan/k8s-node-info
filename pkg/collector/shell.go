@@ -28,7 +28,6 @@ type cmd struct {
 
 // Execute execute a shell command and retun it output or error
 func (e *cmd) Execute(commandArgs string) (string, error) {
-
 	cm := exec.Command(ShellCommand, "-c", commandArgs)
 	output, err := cm.CombinedOutput()
 	if err != nil {
