@@ -38,7 +38,7 @@ var rootCmd = &cobra.Command{
 					continue
 				}
 				outputParts := strings.Split(output, ",")
-				nodeInfo[ci.Name] = outputParts
+				nodeInfo[ci.Key] = outputParts
 			}
 			nodeData := collector.Node{
 				APIVersion: collector.Version,

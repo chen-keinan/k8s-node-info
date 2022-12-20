@@ -44,7 +44,8 @@ type SpecInfo struct {
 }
 
 type Collector struct {
-	Name     string `yaml:"name"`
+	Key      string `yaml:"key"`
+	Title    string `yaml:"title"`
 	Audit    string `yaml:"audit"`
 	NodeType string `yaml:"nodeType"`
 }

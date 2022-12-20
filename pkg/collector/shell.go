@@ -1,8 +1,7 @@
 package collector
 
 import (
-	"bytes"
-	"errors"
+	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -29,19 +28,14 @@ type cmd struct {
 
 // Execute execute a shell command and retun it output or error
 func (e *cmd) Execute(commandArgs string) (string, error) {
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
+
 	cm := exec.Command(ShellCommand, "-c", commandArgs)
-	cm.Stdout = &stdout
-	cm.Stderr = &stderr
-	err := cm.Run()
+	output, err := cm.CombinedOutput()
 	if err != nil {
-		return "", err
+		fmt.Println(fmt.Sprint(err) + ": " + string(output))
+		return "", nil
 	}
-	if len(stderr.String()) > 0 {
-		return "", errors.New(stderr.String())
-	}
-	outPutWithDelimiter := strings.ReplaceAll(strings.TrimSuffix(stdout.String(), "\n"), "\n", ",")
+	outPutWithDelimiter := strings.ReplaceAll(strings.TrimSuffix(string(output), "\n"), "\n", ",")
 	return outPutWithDelimiter, nil
 }
 
