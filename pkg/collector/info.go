@@ -44,8 +44,9 @@ type SpecInfo struct {
 }
 
 type Collector struct {
-	Name  string `yaml:"name"`
-	Audit string `yaml:"audit"`
+	Name     string `yaml:"name"`
+	Audit    string `yaml:"audit"`
+	NodeType string `yaml:"nodeType"`
 }
 
 func getSpecInfo(info string) (*SpecInfo, error) {

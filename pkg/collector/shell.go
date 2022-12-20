@@ -8,15 +8,15 @@ import (
 )
 
 const (
-	WorkerNode   = "Worker"
-	MasterNode   = "Master"
+	WorkerNode   = "worker"
+	MasterNode   = "master"
 	ShellCommand = "sh"
 )
 
 // Shell command interface to preform shell exec commands
 type Shell interface {
 	Execute(commandArgs string) (string, error)
-	NodeType() (string, error)
+	FindNodeType() (string, error)
 }
 
 // NewShellCmd instansiate new shell command
@@ -44,7 +44,7 @@ func (e *cmd) Execute(commandArgs string) (string, error) {
 	return strings.TrimSuffix(stdout.String(), "\n"), nil
 }
 
-func (e *cmd) NodeType() (string, error) {
+func (e *cmd) FindNodeType() (string, error) {
 	masterConfigFiles := []string{
 		"ls /etc/kubernetes/controller-manager.conf",
 		"ls /etc/kubernetes/manifests/kube-apiserver.yaml",

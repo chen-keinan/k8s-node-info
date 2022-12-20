@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Long:  `A tool which provide a way to extract k8s info which is not accessible via apiserver from node cluster based on pre-define commands`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		shellCmd := collector.NewShellCmd()
-		nodeType, err := shellCmd.NodeType()
+		nodeType, err := shellCmd.FindNodeType()
 		if err != nil {
 			return err
 		}
@@ -26,9 +26,15 @@ var rootCmd = &cobra.Command{
 		for _, infoCollector := range infoCollectorMap {
 			nodeInfo := make(map[string]interface{})
 			for _, ci := range infoCollector.Collectors {
+				if ci.NodeType != nodeType {
+					continue
+				}
 				output, err := shellCmd.Execute(ci.Audit)
 				if err != nil {
-					return err
+					fmt.Print(err)
+				}
+				if len(output) == 0 {
+					continue
 				}
 				nodeInfo[ci.Name] = output
 			}

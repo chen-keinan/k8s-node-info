@@ -4,5 +4,6 @@ name: node-info-collector
 title: "Node Specification for info collector"
 collectors:
   - name: kubeApiserverFilePermission
+    nodeType: master
     audit: stat -c %a /etc/kubernetes/manifests/kube-apiserver.yaml
     
