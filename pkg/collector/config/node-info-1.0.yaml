@@ -29,13 +29,43 @@ collectors:
     audit: stat -c %U:%G /etc/kubernetes/manifests/etcd.yaml
   - name: KubePKIDirectoryFileOwnership
     nodeType: master
-    audit: stat -c %U:%G $(ls -R /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }')
+    audit: 'stat -c %U:%G $(ls -R /etc/kubernetes/pki/ | awk ''/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }'')'
   - name: KubePKICertificateFilePermissions
     nodeType: master
-    audit: stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }' | grep \.crt$)
+    audit: 'stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk ''/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }''| grep \.crt$)'
   - name: KubePKIKeyFilePermissions
     nodeType: master
-    audit: stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }' | grep \.key$)
+    audit: 'stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk ''/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }'' | grep \.key$)'''
+  - name: kubeletServiceFilePermissions
+    nodeType: worker
+    audit: stat -c %a /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+  - name: kubeletServiceFileOwnership
+    nodeType: worker
+    audit: stat -c %U:%G /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+  - name: kubeletConfFilePermissions
+    nodeType: worker
+    audit: stat -c %a /etc/kubernetes/kubelet.conf
+  - name: kubeletConfFileOwnership
+    nodeType: worker
+    audit: stat -c %U:%G /etc/kubernetes/kubelet.conf
+  - name: kubeletConfigYamlPermission
+    nodeType: worker
+    audit: stat -c %a /var/lib/kubelet/config.yaml
+  - name: kubeletConfigYamlOwnership
+    nodeType: worker
+    audit: stat -c %U:%G /var/lib/kubelet/config.yaml
+  - name: certificateAuthoritiesFilePermissions
+    nodeType: worker
+    audit: 'stat -c %a $(ps -ef | grep kubelet |grep ''client-ca-file'' | grep -o ''client-ca-file=[^"]\S*'' | awk -F "=" ''{print $2}'' |awk ''FNR <= 1'' 2> /dev/null)'
+  - name: certificateAuthoritiesFileOwnership
+    nodeType: worker
+    audit: 'stat -c %U:%G $(ps -ef | grep kubelet |grep ''client-ca-file'' | grep -o ''client-ca-file=[^"]\S*'' | awk -F "=" ''{print $2}'' |awk ''FNR <= 1'' 2> /dev/null)'
+  - name: kubeConfFilePermissions
+    nodeType: worker
+    audit: 'stat -c %a $(ps -ef | grep kube-proxy |grep ''kubeconfig'' | grep -o ''kubeconfig=[^"]\S* | awk -F "=" ''{print $2}'' |awk ''FNR <= 1'' 2> /dev/null)'
+  - name: kubeConfFileOwnership
+    nodeType: worker
+    audit: 'stat -c %U:%G $(ps -ef | grep kube-proxy |grep ''kubeconfig'' | grep -o ''kubeconfig=[^"]\S* | awk -F "=" ''{print $2}'' |awk ''FNR <= 1'' 2> /dev/null)'
 
 
 

@@ -27,7 +27,7 @@ var rootCmd = &cobra.Command{
 		for _, infoCollector := range infoCollectorMap {
 			nodeInfo := make(map[string]interface{})
 			for _, ci := range infoCollector.Collectors {
-				if ci.NodeType != nodeType {
+				if ci.NodeType != nodeType && nodeType != collector.MasterNode {
 					continue
 				}
 				output, err := shellCmd.Execute(ci.Audit)
