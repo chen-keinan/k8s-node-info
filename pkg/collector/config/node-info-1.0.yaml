@@ -3,7 +3,28 @@ version: "1.0"
 name: node-info-collector
 title: "Node Specification for info collector"
 collectors:
-  - name: kubeApiserverFilePermission
+  - name: kubeAPIServerSpecFilePermission
     nodeType: master
     audit: stat -c %a /etc/kubernetes/manifests/kube-apiserver.yaml
+  - name: kubeAPIServerSpecFileOwnership
+    nodeType: master
+    audit: stat -c %U:%G /etc/kubernetes/manifests/kube-apiserver.yaml
+  - name: kubeControllerManagerSpecFilePermission
+    nodeType: master
+    audit: stat -c %a /etc/kubernetes/manifests/kube-controller-manager.yaml
+  - name: kubeControllerManagerSpecFileOwnership
+    nodeType: master
+    audit: stat -c %U:%G /etc/kubernetes/manifests/kube-controller-manager.yaml
+  - name: kubeSchedulerSpecFilePermission
+    nodeType: master
+    audit: stat -c %a /etc/kubernetes/manifests/kube-scheduler.yaml
+  - name: kubeSchedulerSpecFileOwnership
+    nodeType: master
+    audit: stat -c %U:%G /etc/kubernetes/manifests/kube-scheduler.yaml
+  - name: kubeEtcdSpecFilePermission
+    nodeType: master
+    audit: stat -c %a /etc/kubernetes/manifests/etcd.yaml
+  - name: kubeEtcdSpecFileOwnership
+    nodeType: master
+    audit: stat -c %U:%G /etc/kubernetes/manifests/etcd.yaml
     
