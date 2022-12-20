@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/chen-keinan/k8s-node-info/pkg/collector"
 	"github.com/spf13/cobra"
@@ -36,7 +37,8 @@ var rootCmd = &cobra.Command{
 				if len(output) == 0 {
 					continue
 				}
-				nodeInfo[ci.Name] = output
+				outputParts := strings.Split(output, ",")
+				nodeInfo[ci.Name] = outputParts
 			}
 			nodeData := collector.Node{
 				APIVersion: collector.Version,

@@ -41,7 +41,7 @@ func (e *cmd) Execute(commandArgs string) (string, error) {
 	if len(stderr.String()) > 0 {
 		return "", errors.New(stderr.String())
 	}
-	return strings.TrimSuffix(stdout.String(), "\n"), nil
+	return strings.ReplaceAll(stdout.String(), "\n", ","), nil
 }
 
 func (e *cmd) FindNodeType() (string, error) {
@@ -52,8 +52,13 @@ func (e *cmd) FindNodeType() (string, error) {
 	}
 	for _, path := range masterConfigFiles {
 		output, err := e.Execute(path)
-		if !strings.Contains(path, output) || err != nil {
-			return WorkerNode, nil
+		outputParts := strings.Split(output, ",")
+		if len(outputParts) > 0 {
+			for _, part := range outputParts {
+				if (len(strings.TrimSpace(part)) != 0 && !strings.Contains(path, part)) || err != nil {
+					return WorkerNode, nil
+				}
+			}
 		}
 	}
 	return MasterNode, nil

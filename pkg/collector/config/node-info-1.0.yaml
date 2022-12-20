@@ -27,4 +27,21 @@ collectors:
   - name: kubeEtcdSpecFileOwnership
     nodeType: master
     audit: stat -c %U:%G /etc/kubernetes/manifests/etcd.yaml
+  - name: KubePKIDirectoryFileOwnership
+    nodeType: master
+    audit: stat -c %U:%G $(ls -R /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }')
+  - name: KubePKICertificateFilePermissions
+    nodeType: master
+    audit: stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }' | grep \.crt$)
+  - name: KubePKIKeyFilePermissions
+    nodeType: master
+    audit: stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }' | grep \.key$)
+
+
+
+    
+
+
+
+
     
