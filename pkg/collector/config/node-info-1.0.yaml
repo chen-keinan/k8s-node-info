@@ -87,3 +87,15 @@ collectors:
     title: Kubernetes PKI certificate file permissions
     nodeType: master
     audit: stat -c %a $(ls -aR /etc/kubernetes/pki/ | awk '/:$/&&f{s=$0;f=0}/:$/&&!f{sub(/:$/,"");s=$0;f=1;next}NF&&f{print s"/"$0 }' | grep \.key$)
+  - key: kubeletServiceFilePermissions
+    title: Kubelet service file permissions
+    nodeType: worker
+    audit: stat -c %a /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+  - key: kubeletServiceFileOwnership
+    title: Kubelet service file ownership
+    nodeType: worker
+    audit: stat -c %U:%G /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+  - key: KubeconfigFileExistsPermissions 
+    title: Kubeconfig file exists ensure permissions 
+    nodeType: worker
+    audit: output=`stat -c %a $(ps -ef | grep kube-proxy |grep 'kubeconfig' | grep -o 'kubeconfig=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1') 2>/dev/null` || echo $output
