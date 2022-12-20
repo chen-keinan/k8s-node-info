@@ -41,7 +41,8 @@ func (e *cmd) Execute(commandArgs string) (string, error) {
 	if len(stderr.String()) > 0 {
 		return "", errors.New(stderr.String())
 	}
-	return strings.ReplaceAll(stdout.String(), "\n", ","), nil
+	outPutWithDelimiter := strings.ReplaceAll(strings.TrimSuffix(stdout.String(), "\n"), "\n", ",")
+	return outPutWithDelimiter, nil
 }
 
 func (e *cmd) FindNodeType() (string, error) {
