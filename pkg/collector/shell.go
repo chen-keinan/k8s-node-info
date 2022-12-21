@@ -34,6 +34,7 @@ func (e *cmd) Execute(commandArgs string) (string, error) {
 		fmt.Println(fmt.Sprint(err) + ": " + string(output))
 		return "", nil
 	}
+	// trim newline
 	outPutWithDelimiter := strings.ReplaceAll(strings.TrimSuffix(string(output), "\n"), "\n", ",")
 	return outPutWithDelimiter, nil
 }
