@@ -155,5 +155,35 @@ collectors:
     title: kubelet --make-iptables-util-chains argument is set
     nodeType: worker
     audit: ps -ef | grep kubelet |grep ' --make-iptables-util-chains' | grep -o ' --make-iptables-util-chains=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
-
-  
+  - key: KubeletHostnameOverrideArgumentSet
+    title: kubelet hostname-override argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --hostname-override' | grep -o ' --hostname-override=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletEventQpsArgumentSet
+    title: kubelet --event-qps argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --event-qps' | grep -o ' --event-qps=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletTlsCertFileTlsArgumentSet
+    title: kubelet --tls-cert-file argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --tls-cert-file' | grep -o ' --tls-cert-file=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletTlsPrivateKeyFileArgumentSet
+    title: kubelet --tls-private-key-file argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --tls-private-key-file' | grep -o ' --tls-private-key-file=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletRotateCertificatesArgumentSet
+    title: kubelet --rotate-certificates argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --rotate-certificates' | grep -o ' --rotate-certificates=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletRotateKubeletServerCertificateArgumentSet
+    title: kubelet RotateKubeletServerCertificate argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep 'RotateKubeletServerCertificate' | grep -o 'RotateKubeletServerCertificate=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletRotateKubeletServerCertificateArgumentSet
+    title: kubelet RotateKubeletServerCertificate argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep 'RotateKubeletServerCertificate' | grep -o 'RotateKubeletServerCertificate=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletOnlyUseStrongCryptographic
+    title: Kubelet only makes use of Strong Cryptographic
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep 'TLSCipherSuites' | grep -o 'TLSCipherSuites=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
