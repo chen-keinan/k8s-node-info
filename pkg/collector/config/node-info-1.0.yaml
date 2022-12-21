@@ -132,7 +132,28 @@ collectors:
     nodeType: worker
     audit: ps -ef | grep kubelet |grep ' --anonymous-auth' | grep -o ' --anonymous-auth=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
   - key: KubeletAuthorizationModeArgumentSet
-    title: kubelet --authorization-mode argument is not set
+    title: kubelet --authorization-mode argument is set
     nodeType: worker
     audit: ps -ef | grep kubelet |grep ' --authorization-mode' | grep -o ' --authorization-mode=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletClientCaFileArgumentSet
+    title: kubelet --client-ca-file argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --client-ca-file' | grep -o ' --client-ca-file=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletReadOnlyPortArgumentSet 
+    title: kubelet --read-only-port argument is set 
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --read-only-port' | grep -o ' --read-only-port=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletStreamingConnectionIdleTimeoutArgumentSet
+    title: kubelet --streaming-connection-idle-timeout argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --streamingConnectionIdleTimeout' | grep -o ' --streamingConnectionIdleTimeout=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletProtectKernelDefaultsArgumentSet
+    title: kubelet --protect-kernel-defaults argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --protect-kernel-defaults' | grep -o ' --protect-kernel-defaults=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+  - key: KubeletMakeIptablesUtilChainsArgumentSet
+    title: kubelet --make-iptables-util-chains argument is set
+    nodeType: worker
+    audit: ps -ef | grep kubelet |grep ' --make-iptables-util-chains' | grep -o ' --make-iptables-util-chains=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+
   
