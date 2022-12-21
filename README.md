@@ -4,9 +4,7 @@
 
 Kube-Node-Info is an open source audit info collector which perform Node info (fs and process data) collection and output in a json format.
 
-## Kube-node-info as pod in k8s
-
-* Execute kube-node-info as a job in k8s cluster
+## Kube-node-info as job in k8s
 
 - simple k8s cluster run following job
 
