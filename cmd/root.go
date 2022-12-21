@@ -38,7 +38,16 @@ var rootCmd = &cobra.Command{
 					continue
 				}
 				outputParts := strings.Split(output, ",")
-				nodeInfo[ci.Key] = outputParts
+				filterdParts := make([]string, 0)
+				for _, part := range outputParts {
+					if len(part) == 0 || part == "[^\"]\\S*'" {
+						continue
+					}
+					filterdParts = append(filterdParts, part)
+				}
+				if len(filterdParts) > 0 {
+					nodeInfo[ci.Key] = filterdParts
+				}
 			}
 			nodeData := collector.Node{
 				APIVersion: collector.Version,

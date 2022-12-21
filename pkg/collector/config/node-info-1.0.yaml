@@ -134,5 +134,5 @@ collectors:
   - key: KubeletAuthorizationModeArgumentSet
     title: kubelet --authorization-mode argument is not set
     nodeType: worker
-    audit: ps -ef | grep kubelet |grep ' --anonymous-auth' | grep -o ' --anonymous-auth=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
+    audit: ps -ef | grep kubelet |grep ' --authorization-mode' | grep -o ' --authorization-mode=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1'
   
