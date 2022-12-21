@@ -99,3 +99,23 @@ collectors:
     title: Kubeconfig file exists ensure permissions 
     nodeType: worker
     audit: output=`stat -c %a $(ps -ef | grep kube-proxy |grep 'kubeconfig' | grep -o 'kubeconfig=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1') 2>/dev/null` || echo $output
+  - key: KubeconfigFileExistsPermissions 
+    title: Kubeconfig file exists ensure ownership 
+    nodeType: worker
+    audit: output=`stat -c %U:%G $(ps -ef | grep kube-proxy |grep 'kubeconfig' | grep -o 'kubeconfig=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1') 2>/dev/null` || echo $output
+  - key: kubeletConfFilePermissions
+    title: kubelet.conf file permissions
+    nodeType: worker
+    audit: stat -c %a /etc/kubernetes/kubelet.conf
+  - key: kubeletConfFileOwnership
+    title: kubelet.conf file ownership
+    nodeType: worker
+    audit: stat -c %U:%G /etc/kubernetes/kubelet.conf
+  - key: CertificateAuthoritiesFilePermissions
+    title: Client certificate authorities file permissions
+    nodeType: worker
+    audit: stat -c %a $(ps -ef | grep kubelet |grep 'client-ca-file' | grep -o 'client-ca-file=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1') 2> /dev/null
+  - key: CertificateAuthoritiesFileOwnership
+    title: Client certificate authorities file ownership
+    nodeType: worker
+    audit: stat -c %U:%G $(ps -ef | grep kubelet |grep 'client-ca-file' | grep -o 'client-ca-file=[^"]\S*' | awk -F "=" '{print $2}' |awk 'FNR <= 1') 2> /dev/null
