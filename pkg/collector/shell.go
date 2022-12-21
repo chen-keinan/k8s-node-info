@@ -49,6 +49,9 @@ func (e *cmd) FindNodeType() (string, error) {
 	}
 	for _, path := range masterConfigFiles {
 		output, err := e.Execute(path)
+		if err != nil {
+			return "", err
+		}
 		outputParts := strings.Split(output, ",")
 		if len(outputParts) > 0 {
 			for _, part := range outputParts {
