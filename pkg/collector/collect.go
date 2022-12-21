@@ -4,12 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-
-	"github.com/spf13/cobra"
 )
 
 // CollectNodeData run spec audit command and output it result data
-func CollectNodeData(cmd *cobra.Command, args []string) error {
+func CollectNodeData() error {
 	shellCmd := NewShellCmd()
 	nodeType, err := shellCmd.FindNodeType()
 	if err != nil {
