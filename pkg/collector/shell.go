@@ -7,9 +7,11 @@ import (
 )
 
 const (
-	WorkerNode   = "worker"
+	// WorkerNode worker node type
+	WorkerNode = "worker"
+	// MasterNode master Node type
 	MasterNode   = "master"
-	ShellCommand = "sh"
+	shellCommand = "sh"
 )
 
 // Shell command interface to preform shell exec commands
@@ -28,7 +30,7 @@ type cmd struct {
 
 // Execute execute a shell command and retun it output or error
 func (e *cmd) Execute(commandArgs string) (string, error) {
-	cm := exec.Command(ShellCommand, "-c", commandArgs)
+	cm := exec.Command(shellCommand, "-c", commandArgs)
 	output, err := cm.CombinedOutput()
 	if err != nil {
 		fmt.Println(fmt.Sprint(err) + ": " + string(output))

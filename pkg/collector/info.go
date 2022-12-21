@@ -9,13 +9,16 @@ import (
 
 const (
 	configFolder = "config"
-	Version      = "v1"
-	Kind         = "Nodeinfo"
+	// Version resource version
+	Version = "v1"
+	// Kind resource kind
+	Kind = "Nodeinfo"
 )
 
 //go:embed config
 var config embed.FS
 
+// LoadConfig load audit commands specification from config file
 func LoadConfig() (map[string]*SpecInfo, error) {
 	dirEntries, err := config.ReadDir(configFolder)
 	if err != nil {
@@ -36,6 +39,7 @@ func LoadConfig() (map[string]*SpecInfo, error) {
 	return specInfoMap, nil
 }
 
+// SpecInfo spec info with require comand to collect
 type SpecInfo struct {
 	Version    string      `yaml:"version"`
 	Name       string      `yaml:"name"`
@@ -43,6 +47,7 @@ type SpecInfo struct {
 	Collectors []Collector `yaml:"collectors"`
 }
 
+// Collector details of info to collect
 type Collector struct {
 	Key      string `yaml:"key"`
 	Title    string `yaml:"title"`
@@ -59,6 +64,7 @@ func getSpecInfo(info string) (*SpecInfo, error) {
 	return &specInfo, nil
 }
 
+// Node output node data with info results
 type Node struct {
 	APIVersion string                 `json:"apiVersion"`
 	Kind       string                 `json:"kind"`

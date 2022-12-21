@@ -15,6 +15,7 @@ var rootCmd = &cobra.Command{
 	RunE:  collector.CollectNodeData,
 }
 
+// Execute CLI commands
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)

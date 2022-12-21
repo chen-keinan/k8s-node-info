@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// CollectNodeData run spec audit command and output it result data
 func CollectNodeData(cmd *cobra.Command, args []string) error {
 	shellCmd := NewShellCmd()
 	nodeType, err := shellCmd.FindNodeType()
@@ -28,17 +29,7 @@ func CollectNodeData(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Print(err)
 			}
-			if len(output) == 0 {
-				continue
-			}
-			outputParts := strings.Split(output, ",")
-			filterdParts := make([]string, 0)
-			for _, part := range outputParts {
-				if len(part) == 0 || part == "[^\"]\\S*'" {
-					continue
-				}
-				filterdParts = append(filterdParts, part)
-			}
+			filterdParts := filterAuditResults(output)
 			if len(filterdParts) > 0 {
 				nodeInfo[ci.Key] = filterdParts
 			}
@@ -49,11 +40,34 @@ func CollectNodeData(cmd *cobra.Command, args []string) error {
 			Type:       nodeType,
 			Info:       nodeInfo,
 		}
-		data, err := json.Marshal(nodeData)
+		err := printOutput(nodeData)
 		if err != nil {
 			return err
 		}
-		fmt.Println(string(data))
 	}
+	return nil
+}
+
+func filterAuditResults(output string) []string {
+	if len(output) == 0 {
+		return []string{}
+	}
+	outputParts := strings.Split(output, ",")
+	filterdParts := make([]string, 0)
+	for _, part := range outputParts {
+		if len(part) == 0 || part == "[^\"]\\S*'" {
+			continue
+		}
+		filterdParts = append(filterdParts, part)
+	}
+	return filterdParts
+}
+
+func printOutput(nodeData Node) error {
+	data, err := json.Marshal(nodeData)
+	if err != nil {
+		return err
+	}
+	fmt.Println(string(data))
 	return nil
 }
