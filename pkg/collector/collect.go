@@ -63,7 +63,7 @@ func filterAuditResults(output string) []interface{} {
 		if len(part) == 0 || part == "[^\"]\\S*'" {
 			continue
 		}
-		if intVal, err := strconv.Atoi(string(part)); err == nil {
+		if intVal, err := strconv.Atoi(part); err == nil {
 			filterdParts = append(filterdParts, intVal)
 			continue
 		}
@@ -85,7 +85,10 @@ func printOutput(nodeData Node, output string, writer io.Writer) error {
 		data := make([][]string, 0)
 		for key, ndata := range nodeData.Info {
 			var results []string
-			v := ndata.([]interface{})
+			v, ok := ndata.([]interface{})
+			if !ok {
+				return fmt.Errorf("type not supported")
+			}
 			for _, t := range v {
 				switch n := t.(type) {
 				case int:
