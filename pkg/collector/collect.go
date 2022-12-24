@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/olekukonko/tablewriter"
@@ -52,17 +53,22 @@ func CollectNodeData(cmd *cobra.Command) error {
 	return nil
 }
 
-func filterAuditResults(output string) []string {
+func filterAuditResults(output string) []interface{} {
 	if len(output) == 0 {
-		return []string{}
+		return []interface{}{}
 	}
 	outputParts := strings.Split(output, ",")
-	filterdParts := make([]string, 0)
+	filterdParts := make([]interface{}, 0)
 	for _, part := range outputParts {
 		if len(part) == 0 || part == "[^\"]\\S*'" {
 			continue
 		}
+		if intVal, err := strconv.Atoi(string(part)); err == nil {
+			filterdParts = append(filterdParts, intVal)
+			continue
+		}
 		filterdParts = append(filterdParts, part)
+
 	}
 	return filterdParts
 }
@@ -78,13 +84,18 @@ func printOutput(nodeData Node, output string, writer io.Writer) error {
 	case "table":
 		data := make([][]string, 0)
 		for key, ndata := range nodeData.Info {
-			results, ok := ndata.([]string)
-			if !ok {
-				return fmt.Errorf("no data found")
+			var results []string
+			v := ndata.([]interface{})
+			for _, t := range v {
+				switch n := t.(type) {
+				case int:
+					results = append(results, strconv.Itoa(n))
+				case string:
+					results = append(results, t.(string))
+				}
 			}
 			if len(results) > 0 {
 				joinedResults := join(results...)
-
 				data = append(data, []string{key, joinedResults})
 			}
 

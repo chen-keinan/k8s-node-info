@@ -1,5 +1,5 @@
-                    KEY                    |  VALUE   
--------------------------------------------+----------
-  AdminConfFilePermissions                 |     600  
-  CertificateAuthoritiesFilePermissions    |     644  
-  ContainerNetworkInterfaceFilePermissions | 700,500  
+                    KEY                    |   VALUE    
+-------------------------------------------+------------
+  ContainerNetworkInterfaceFilePermissions |   700,500  
+  AdminConfFilePermissions                 |       600  
+  CertificateAuthoritiesFilePermissions    | root:root  

@@ -3,6 +3,7 @@ package collector
 import (
 	"bytes"
 	"os"
+	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -16,21 +17,6 @@ func TestPrintOutput(t *testing.T) {
 		nodeData       Node
 	}{
 		{
-			name:           "print table format",
-			wantOutputFile: "./testdata/fixture/output.table",
-			format:         "table",
-			nodeData: Node{
-				APIVersion: Version,
-				Type:       MasterNode,
-				Kind:       "NodeInfo",
-				Info: map[string]interface{}{
-					"AdminConfFilePermissions":                 []string{"600"},
-					"CertificateAuthoritiesFilePermissions":    []string{"644"},
-					"ContainerNetworkInterfaceFilePermissions": []string{"700", "500"},
-				},
-			},
-		},
-		{
 			name:           "print json format",
 			format:         "json",
 			wantOutputFile: "./testdata/fixture/output.json",
@@ -39,9 +25,24 @@ func TestPrintOutput(t *testing.T) {
 				Type:       MasterNode,
 				Kind:       "NodeInfo",
 				Info: map[string]interface{}{
-					"AdminConfFilePermissions":                 []string{"600"},
-					"CertificateAuthoritiesFilePermissions":    []string{"644"},
-					"ContainerNetworkInterfaceFilePermissions": []string{"700", "500"},
+					"AdminConfFilePermissions":                 []interface{}{600},
+					"CertificateAuthoritiesFilePermissions":    []interface{}{"root:root"},
+					"ContainerNetworkInterfaceFilePermissions": []interface{}{700, 500},
+				},
+			},
+		},
+		{
+			name:           "print table format",
+			wantOutputFile: "./testdata/fixture/output.table",
+			format:         "table",
+			nodeData: Node{
+				APIVersion: Version,
+				Type:       MasterNode,
+				Kind:       "NodeInfo",
+				Info: map[string]interface{}{
+					"AdminConfFilePermissions":                 []interface{}{600},
+					"CertificateAuthoritiesFilePermissions":    []interface{}{"root:root"},
+					"ContainerNetworkInterfaceFilePermissions": []interface{}{700, 500},
 				},
 			},
 		},
@@ -54,6 +55,37 @@ func TestPrintOutput(t *testing.T) {
 			b, err := os.ReadFile(tt.wantOutputFile)
 			assert.NoError(t, err)
 			assert.Equal(t, buff.String(), string(b))
+		})
+	}
+}
+
+func TestFilterOutput(t *testing.T) {
+	tests := []struct {
+		name   string
+		output string
+		want   []interface{}
+	}{
+		{
+			name:   "int results",
+			output: "600,700",
+			want:   []interface{}{600, 700},
+		},
+		{
+			name:   "string results",
+			output: "root:root",
+			want:   []interface{}{"root:root"},
+		},
+		{
+			name:   "null results",
+			output: "[^\"]\\S*'",
+			want:   []interface{}{},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := filterAuditResults(tt.output)
+			assert.True(t, reflect.DeepEqual(got, tt.want))
 		})
 	}
 }
