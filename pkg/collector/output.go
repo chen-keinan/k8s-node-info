@@ -10,7 +10,6 @@ import (
 	"github.com/olekukonko/tablewriter"
 )
 
-
 func printOutput(nodeData Node, output string, writer io.Writer) error {
 	switch output {
 	case "json":
