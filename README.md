@@ -39,33 +39,33 @@ kubectl logs node-info-ng2z7
       "root:root"
     ],
     "AdminConfFilePermissions": [
-      "600"
+      600
     ],
     "CertificateAuthoritiesFileOwnership": [
       "root:root"
     ],
     "CertificateAuthoritiesFilePermissions": [
-      "644"
+      644
     ],
     "ContainerNetworkInterfaceFileOwnership": [
       "root:root",
       "root:root"
     ],
     "ContainerNetworkInterfaceFilePermissions": [
-      "700",
-      "775"
+      700,
+      775
     ],
     "ControllerManagerConfFileOwnership": [
       "root:root"
     ],
     "ControllerManagerConfFilePermissions": [
-      "600"
+      600
     ],
     "EtcdDataDirectoryOwnership": [
       "root:root"
     ],
     "EtcdDataDirectoryPermissions": [
-      "700"
+      700
     ],
     "KubePKIDirectoryFileOwnership": [
       "root:root",
@@ -93,17 +93,23 @@ kubectl logs node-info-ng2z7
       "root:root"
     ],
     "KubePKIKeyFilePermissions": [
-      "600",
-      "600",
-      "600",
-      "600",
-      "600",
-      "600",
-      "600",
-      "600",
-      "600",
-      "600",
-      "600"
+      600,
+      600,
+      600,
+      600,
+      600,
+      600,
+      600,
+      600,
+      600,
+      600,
+      600
+    ],
+    "KubeconfigFileExistsPermissions": [
+      ""
+    ],
+    "KubeletAnonymousAuthArgumentSet": [
+      ""
     ],
     "KubeletAuthorizationModeArgumentSet": [
       "Node",
@@ -112,6 +118,33 @@ kubectl logs node-info-ng2z7
     "KubeletClientCaFileArgumentSet": [
       "/etc/kubernetes/pki/ca.crt"
     ],
+    "KubeletEventQpsArgumentSet": [
+      ""
+    ],
+    "KubeletHostnameOverrideArgumentSet": [
+      ""
+    ],
+    "KubeletMakeIptablesUtilChainsArgumentSet": [
+      ""
+    ],
+    "KubeletOnlyUseStrongCryptographic": [
+      ""
+    ],
+    "KubeletProtectKernelDefaultsArgumentSet": [
+      ""
+    ],
+    "KubeletReadOnlyPortArgumentSet": [
+      ""
+    ],
+    "KubeletRotateCertificatesArgumentSet": [
+      ""
+    ],
+    "KubeletRotateKubeletServerCertificateArgumentSet": [
+      ""
+    ],
+    "KubeletStreamingConnectionIdleTimeoutArgumentSet": [
+      ""
+    ],
     "KubeletTlsCertFileTlsArgumentSet": [
       "/etc/kubernetes/pki/apiserver.crt"
     ],
@@ -119,64 +152,64 @@ kubectl logs node-info-ng2z7
       "/etc/kubernetes/pki/apiserver.key"
     ],
     "KubernetesPKICertificateFilePermissions": [
-      "644",
-      "644",
-      "644",
-      "644",
-      "644",
-      "644",
-      "644",
-      "644",
-      "644",
-      "644"
+      644,
+      644,
+      644,
+      644,
+      644,
+      644,
+      644,
+      644,
+      644,
+      644
     ],
     "SchedulerConfFileOwnership": [
       "root:root"
     ],
     "SchedulerConfFilePermissions": [
-      "600"
+      600
     ],
     "kubeAPIServerSpecFileOwnership": [
       "root:root"
     ],
     "kubeAPIServerSpecFilePermission": [
-      "600"
+      600
     ],
     "kubeControllerManagerSpecFileOwnership": [
       "root:root"
     ],
     "kubeControllerManagerSpecFilePermission": [
-      "600"
+      600
     ],
     "kubeEtcdSpecFileOwnership": [
       "root:root"
     ],
     "kubeEtcdSpecFilePermission": [
-      "600"
+      600
     ],
     "kubeSchedulerSpecFileOwnership": [
       "root:root"
     ],
     "kubeSchedulerSpecFilePermission": [
-      "600"
+      600
     ],
     "kubeletConfFileOwnership": [
       "root:root"
     ],
     "kubeletConfFilePermissions": [
-      "600"
+      600
     ],
     "kubeletConfigYamlConfigurationFileOwnership": [
       "root:root"
     ],
     "kubeletConfigYamlConfigurationFilePermission": [
-      "644"
+      644
     ],
     "kubeletServiceFileOwnership": [
       "root:root"
     ],
     "kubeletServiceFilePermissions": [
-      "644"
+      644
     ]
   }
 }
