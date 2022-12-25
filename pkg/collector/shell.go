@@ -14,6 +14,13 @@ const (
 	shellCommand = "sh"
 )
 
+var (
+	replacments = map[string]string{
+		"\n":         ",",
+		"[^\"]\\S*'": "",
+	}
+)
+
 // Shell command interface to preform shell exec commands
 type Shell interface {
 	Execute(commandArgs string) (string, error)
@@ -37,7 +44,7 @@ func (e *cmd) Execute(commandArgs string) (string, error) {
 		return "", nil
 	}
 	// trim newline
-	outPutWithDelimiter := strings.ReplaceAll(strings.TrimSuffix(string(output), "\n"), "\n", ",")
+	outPutWithDelimiter := SanitizeString(strings.TrimSuffix(string(output), "\n"), replacments)
 	return outPutWithDelimiter, nil
 }
 
